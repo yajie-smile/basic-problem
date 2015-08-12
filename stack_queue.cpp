@@ -3,7 +3,7 @@ using namespace std;
 
 const int stkMaxSize = 10;
 const int queMaxSize = 10;
-
+//realize stack with arrays
 class Stack {
     int stk[stkMaxSize];
     int size;
@@ -43,6 +43,58 @@ public:
         }
     }
 };
+//realize stack with listnodes and class template
+static int construct = 0;//test if every node we create get deleted in the end
+static int destruct = 0;
+
+template<class T>
+class Stack {
+    class ListNode {
+    public:
+        T val;
+        ListNode* next;
+        ListNode(T t) : val(t), next(NULL) {construct++;}
+        ListNode() { construct++; }
+        ~ListNode() { destruct++; }
+    };
+    ListNode* head;
+public:
+    Stack() : head(NULL) {}
+    void push(T ele) {
+        ListNode* t = new ListNode(ele);
+        t->next = head;
+        head = t;
+    }
+    void pop() {
+        ListNode* toBeDeleted = head;
+        head = head->next;
+        delete toBeDeleted;
+    }
+    T top() {
+        return head->val;
+    }
+    bool empty() {
+        if(head == NULL) return true;
+        else return false;
+    }
+};
+//test cases for CLASS TEMPLATE Stack below
+#if 0
+int main() {
+    Stack<int> stk;
+    for(int i = 0; i < 10; i++)
+        stk.push(i);
+    for(int i = 0; i < 12; i++) {
+        if(!stk.empty()) {
+            cout<<stk.top()<<endl;
+            stk.pop();
+        }
+    }
+    cout<<"---------------"<<endl;
+    cout<<construct<<endl;
+    cout<<destruct<<endl;
+}
+#endif
 
 class Queue {
     int que[queMaxSize];
