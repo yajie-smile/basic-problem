@@ -46,7 +46,7 @@ void merge(int* a, int* tmp, int start, int mid, int end) {
     while(j < end + 1) a[k++] = tmp[j++];
 }
 void mergeSort(int* a, int* tmp, int start, int end) {
-    if(a == NULL || start == end) return ;
+    if(a == NULL || start >= end) return ;
     
     if(start < end)
     {
