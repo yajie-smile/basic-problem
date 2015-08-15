@@ -99,27 +99,28 @@ int main() {
 class Queue {
     int que[queMaxSize];
     int posWr, posRd;
+    bool full;
 public:
-    Queue() : posWr(-1), posRd(-1) {}
+    Queue() : posWr(-1), posRd(-1), full(false) {}
     void push(int ele) {
-        if(posWr - posRd == queMaxSize || posRd - posWr == 1) {
+        if(full) {
             cout<<"the queue is full!!!"<<endl;
             return;
         }
-        
+        if(posWr + 1 - posRd == queMaxSize || posWr + 1 == posRd)
+            full = true;
         posWr++;
         if(posWr == queMaxSize)
             posWr = 0;
-        
         que[posWr] = ele;
-    
+        
     }
     void pop() {
         if(empty()) {
             cout<<"the queue is empty!!!"<<endl;
             return;
         }
-        
+        full = false;
         posRd++;
         if(posRd == queMaxSize)
             posRd = 0;
@@ -133,17 +134,19 @@ public:
         return que[posRd + 1];
     }
     bool empty() {
-        if(posWr == posRd) return true;
+        if(posWr == posRd && (!full)) return true;
         else return false;
     }
     void print() {
         if(!empty()) {
-            int i = posRd;
+            int i = posRd + 1;
+            if(i == queMaxSize) i = 0;
             while(i != posWr) {
-                cout<<que[i + 1]<<" ";
+                cout<<que[i]<<" ";
                 i++;
-                if(i == queMaxSize) i = -1;
+                if(i == queMaxSize) i = 0;
             }
+            cout<<que[i];
             cout<<endl;
         }
     }
