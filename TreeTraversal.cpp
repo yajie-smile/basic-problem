@@ -9,7 +9,12 @@ struct TreeNode {
     TreeNode* right;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
-
+void preOrder(TreeNode* root) {
+    if(root == NULL) return;
+    cout<<root->val<<" ";
+    if(root->left != NULL) preOrder(root->left);
+    if(root->right != NULL) preOrder(root->right);
+}
 void preOrder(TreeNode* root) {
     if(NULL == root) return;
     
@@ -27,7 +32,12 @@ void preOrder(TreeNode* root) {
         if(node->left != NULL) stk.push(node->left);
     }
 }
-
+void inOrder(TreeNode* root) {
+    if(root == NULL) return;
+    if(root->left != NULL) inOrder(root->left);
+    cout<<root->val<<" ";
+    if(root->right != NULL) inOrder(root->right);
+}
 void inOrder(TreeNode* root) {
     if(NULL == root) return;
     
@@ -47,7 +57,12 @@ void inOrder(TreeNode* root) {
         node = node->right;
     }
 }
-
+void postOrder(TreeNode* root) {
+    if(root == NULL) return;
+    if(root->left != NULL) postOrder(root->left);
+    if(root->right != NULL) postOrder(root->right);
+    cout<<root->val<<" ";
+}
 void postOrder(TreeNode* root) {
     if(NULL == root) return;
     
